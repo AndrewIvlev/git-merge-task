@@ -51,7 +51,14 @@ namespace Kontur.Courses.Git
 			}
 		}
 
-		public T Value => HasValue ? value : throw new InvalidOperationException("No value due to error: " + Error);
+		public T Value
+		{
+			get
+			{
+				if (HasValue) return value;
+				else throw new InvalidOperationException("No value due to error: " + Error);
+			}
+		} 
 		private readonly T value;
 		public readonly string Error;
 		public readonly bool HasValue;
