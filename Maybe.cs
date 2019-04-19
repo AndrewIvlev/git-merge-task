@@ -18,6 +18,7 @@ namespace Kontur.Courses.Git
 		private Maybe(T value, string error, bool hasValue)
 		{
 			this.value = value;
+			this.value = value;
 			Error = error;
 			HasValue = hasValue;
 		}
@@ -38,6 +39,7 @@ namespace Kontur.Courses.Git
 			if (ReferenceEquals(this, obj)) return true;
 			if (obj.GetType() != this.GetType()) return false;
 			return Equals((Maybe<T>)obj);
+			return Equals((Maybe<T>)obj);
 		}
 
 		public override int GetHashCode()
@@ -47,11 +49,20 @@ namespace Kontur.Courses.Git
 				var hashCode = EqualityComparer<T>.Default.GetHashCode(Value);
 				hashCode = (hashCode * 397) ^ (Error != null ? Error.GetHashCode() : 0);
 				hashCode = (hashCode * 397) ^ HasValue.GetHashCode();
+				hashCode = (hashCode * 397) ^ (Error != null ? Error.GetHashCode() : 0);
+				hashCode = (hashCode * 397) ^ HasValue.GetHashCode();
 				return hashCode;
 			}
 		}
 
 		public T Value => HasValue ? value : throw new InvalidOperationException("No value due to error: " + Error);
+		private readonly T value;
+			get
+			{
+				if (HasValue) return value;
+				else throw new InvalidOperationException("No value due to error: " + Error);
+			}
+		} 
 		private readonly T value;
 		public readonly string Error;
 		public readonly bool HasValue;
